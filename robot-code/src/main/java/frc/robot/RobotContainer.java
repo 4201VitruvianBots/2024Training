@@ -40,12 +40,21 @@ public class RobotContainer {
   }
   
 
+  // Motor IDs!
+  // Intake Motors: 30, 31 (Control these simultaneously)
+  // Shooter Motors: 41, 42 (Control these independently)
+  TalonFX intakeMotor1 = new TalonFX(30);
+  
   public void main() {
     
     // Don't worry about the stuff on the outside right now.
     // Just type in here!
     
-    
+    if (xboxController.getXButton()) {
+        intakeMotor1.set(0.5); // Set the intake motor at 50% speed
+    } else {
+        intakeMotor1.set(0.0); // Stop the intake motor
+    }
     
   }
 
