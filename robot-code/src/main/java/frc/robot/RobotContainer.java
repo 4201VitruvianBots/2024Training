@@ -1,0 +1,57 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot;
+
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.SwerveDependencies.SWERVE;
+import frc.robot.SwerveDependencies.SWERVE.DRIVE;
+
+public class RobotContainer {
+  private final Joystick leftJoystick = new Joystick(0);
+  private final Joystick rightJoystick = new Joystick(1);
+  private final CommandXboxController xboxController =
+      new CommandXboxController(2);
+      
+    private final CommandSwerveDrivetrain m_swerveDrive =
+      new CommandSwerveDrivetrain(
+          SWERVE.DrivetrainConstants,
+          SWERVE.FrontLeftConstants,
+          SWERVE.FrontRightConstants,
+          SWERVE.BackLeftConstants,
+          SWERVE.BackRightConstants);
+
+  public RobotContainer() {
+    configureBindings();
+    
+    if (RobotBase.isReal()) {
+      m_swerveDrive.setDefaultCommand(
+          m_swerveDrive.applyChassisSpeeds(
+              () ->
+                  new ChassisSpeeds(
+                      leftJoystick.getRawAxis(1) * DRIVE.kMaxSpeedMetersPerSecond,
+                      leftJoystick.getRawAxis(0) * DRIVE.kMaxSpeedMetersPerSecond,
+                      rightJoystick.getRawAxis(0) * DRIVE.kMaxRotationRadiansPerSecond)));
+    }
+  }
+
+  private void configureBindings() {
+    
+  }
+
+  public Command getAutonomousCommand() {
+    return Commands.print("No autonomous command configured");
+  }
+  
+  public void disabledInit() {
+    m_swerveDrive.applyRequest(SwerveRequest.ApplyChassisSpeeds::new);
+  }
+}
