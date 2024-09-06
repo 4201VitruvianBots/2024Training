@@ -4,34 +4,30 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.SwerveDependencies.SWERVE;
 import frc.robot.SwerveDependencies.SWERVE.DRIVE;
 
 public class RobotContainer {
   private final Joystick leftJoystick = new Joystick(0);
   private final Joystick rightJoystick = new Joystick(1);
-  private final CommandXboxController xboxController =
-      new CommandXboxController(2);
+  private final XboxController xboxController = new XboxController(2);
       
-    private final CommandSwerveDrivetrain m_swerveDrive =
-      new CommandSwerveDrivetrain(
-          SWERVE.DrivetrainConstants,
-          SWERVE.FrontLeftConstants,
+  private final CommandSwerveDrivetrain m_swerveDrive = new CommandSwerveDrivetrain(SWERVE.DrivetrainConstants, SWERVE.FrontLeftConstants,
           SWERVE.FrontRightConstants,
           SWERVE.BackLeftConstants,
           SWERVE.BackRightConstants);
 
   public RobotContainer() {
-    configureBindings();
-    
+    // Drivetrain code
     if (RobotBase.isReal()) {
       m_swerveDrive.setDefaultCommand(
           m_swerveDrive.applyChassisSpeeds(
@@ -42,8 +38,14 @@ public class RobotContainer {
                       rightJoystick.getRawAxis(0) * DRIVE.kMaxRotationRadiansPerSecond)));
     }
   }
+  
 
-  private void configureBindings() {
+  public void main() {
+    
+    // Don't worry about the stuff on the outside right now.
+    // Just type in here!
+    
+    
     
   }
 
@@ -53,5 +55,9 @@ public class RobotContainer {
   
   public void disabledInit() {
     m_swerveDrive.applyRequest(SwerveRequest.ApplyChassisSpeeds::new);
+  }
+  
+  public void teleopPeriodic() {
+    main();
   }
 }
