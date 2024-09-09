@@ -41,14 +41,13 @@ public class RobotContainer {
   
 
   // Motor IDs!
-  // Intake Motors: 30, 31 (Control these simultaneously)
-  // Shooter Motors: 41, 42 (Control these independently)
+  // Front intake motor: 30
+  // Back intake motor: 31
+  // Bottom shooter motor: 41
+  // Top shooter motor: 42
   TalonFX intakeMotor1 = new TalonFX(30);
   
   public void main() {
-    
-    // Don't worry about the stuff on the outside right now.
-    // Just type in here!
     
     if (xboxController.getXButton()) {
         intakeMotor1.set(0.5); // Set the intake motor at 50% speed
@@ -64,9 +63,5 @@ public class RobotContainer {
   
   public void disabledInit() {
     m_swerveDrive.applyRequest(SwerveRequest.ApplyChassisSpeeds::new);
-  }
-  
-  public void teleopPeriodic() {
-    main();
   }
 }
